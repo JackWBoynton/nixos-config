@@ -1,7 +1,7 @@
 # Connectivity info for Linux VM
 NIXADDR ?= unset
 NIXPORT ?= 22
-NIXUSER ?= mitchellh
+NIXUSER ?= jack
 
 # Get the path to this Makefile and directory
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
@@ -98,6 +98,9 @@ vm/secrets:
 	rsync -av -e 'ssh $(SSH_OPTIONS)' \
 		--exclude='environment' \
 		$(HOME)/.ssh/ $(NIXUSER)@$(NIXADDR):~/.ssh
+	# aws
+	rsync -av -e 'ssh $(SSH_OPTIONS)' \
+		$(HOME)/.aws/ $(NIXUSER)@$(NIXADDR):~/.aws
 
 # copy the Nix configurations into the VM.
 vm/copy:

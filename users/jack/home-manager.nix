@@ -35,12 +35,14 @@ in {
     pkgs.ripgrep
     pkgs.tree
     pkgs.watch
+    pkgs.can-utils
 
     pkgs.gopls
     pkgs.zigpkgs.master
 
     # Node is required for Copilot.vim
     pkgs.nodejs
+    pkgs.awscli
 
     (pkgs.python3.withPackages (p: with p; [
       ipython
@@ -120,8 +122,7 @@ in {
     config = {
       whitelist = {
         prefix= [
-          "$HOME/code/go/src/github.com/hashicorp"
-          "$HOME/code/go/src/github.com/mitchellh"
+          "$HOME/code/go/src/github.com/jackwboynton"
         ];
 
         exact = ["$HOME/.envrc"];
@@ -168,8 +169,8 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Mitchell Hashimoto";
-    userEmail = "mitchell.hashimoto@gmail.com";
+    userName = "Jack Boynton";
+    userEmail = "jackboynton10@gmail.com";
     signing = {
       key = "523D5DC389D273BC";
       signByDefault = true;
@@ -183,7 +184,7 @@ in {
       color.ui = true;
       core.askPass = ""; # needs to be empty to use terminal for ask pass
       credential.helper = "store"; # want to make this more secure
-      github.user = "mitchellh";
+      github.user = "jackboynton";
       push.default = "tracking";
       init.defaultBranch = "main";
     };
@@ -192,7 +193,6 @@ in {
   programs.go = {
     enable = true;
     goPath = "code/go";
-    goPrivate = [ "github.com/mitchellh" "github.com/hashicorp" "rfc822.mx" ];
   };
 
   programs.tmux = {
