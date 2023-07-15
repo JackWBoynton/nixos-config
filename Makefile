@@ -7,11 +7,11 @@ NIXUSER ?= jack
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 # The name of the nixosConfiguration in the flake
-NIXNAME ?= vm-intel
+NIXNAME ?= vm-aarch64
 
 # SSH options that are used. These aren't meant to be overridden but are
 # reused a lot so we just store them up here.
-SSH_OPTIONS=-o PubkeyAuthentication=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+SSH_OPTIONS=-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 
 # We need to do some OS switching below.
 UNAME := $(shell uname)
@@ -90,8 +90,6 @@ vm/bootstrap:
 vm/secrets:
 	# GPG keyring
 	rsync -av -e 'ssh $(SSH_OPTIONS)' \
-		--exclude='.#*' \
-		--exclude='S.*' \
 		--exclude='*.conf' \
 		$(HOME)/.gnupg/ $(NIXUSER)@$(NIXADDR):~/.gnupg
 	# SSH keys
@@ -101,6 +99,9 @@ vm/secrets:
 	# aws
 	rsync -av -e 'ssh $(SSH_OPTIONS)' \
 		$(HOME)/.aws/ $(NIXUSER)@$(NIXADDR):~/.aws
+	# netrc
+	rsync -av -e 'ssh $(SSH_OPTIONS)' \
+		$(HOME)/.netrc $(NIXUSER)@$(NIXADDR):~/.netrc
 
 # copy the Nix configurations into the VM.
 vm/copy:
@@ -116,7 +117,7 @@ vm/copy:
 # have to run vm/copy before.
 vm/switch:
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) $(NIXUSER)@$(NIXADDR) " \
-		sudo NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" \
+		sudo NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" -vv \
 	"
 
 # Build an ISO image

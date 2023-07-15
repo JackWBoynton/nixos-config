@@ -43,6 +43,8 @@ in {
     # Node is required for Copilot.vim
     pkgs.nodejs
     pkgs.awscli
+    pkgs.pdm
+    pkgs.gcc
 
     (pkgs.python3.withPackages (p: with p; [
       ipython
@@ -172,8 +174,8 @@ in {
     userName = "Jack Boynton";
     userEmail = "jackboynton10@gmail.com";
     signing = {
-      key = "523D5DC389D273BC";
-      signByDefault = true;
+      key = "8399D7AB9FACFAF6";
+      signByDefault = false;
     };
     aliases = {
       prettylog = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
