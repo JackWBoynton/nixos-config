@@ -79,7 +79,7 @@ test -n "$PS1" &&
 prompt_color
 
 # add more space to /run/user/1000 for nix-shell envs
-alias morespace='sudo mount -o remount,size=$1 /run/user/1000'
+morespace() { sudo mount -o remount,size="$1" /run/user/1000; }
 
 # aws
 alias aws-dev="export AWS_ENV=dev && export AWS_PROFILE=dev-data && export AWS_DEFAULT_REGION=us-east-1"
