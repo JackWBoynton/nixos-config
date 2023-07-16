@@ -102,6 +102,9 @@ vm/secrets:
 	# netrc
 	rsync -av -e 'ssh $(SSH_OPTIONS)' \
 		$(HOME)/.netrc $(NIXUSER)@$(NIXADDR):~/.netrc
+	# pypi
+	rsync -av -e 'ssh $(SSH_OPTIONS)' \
+		$(HOME)/.config/pip/pip.conf $(NIXUSER)@$(NIXADDR):~/.config/pip/pip.conf
 
 # copy the Nix configurations into the VM.
 vm/copy:

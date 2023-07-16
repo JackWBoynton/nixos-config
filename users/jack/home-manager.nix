@@ -45,6 +45,7 @@ in {
     pkgs.awscli
     pkgs.pdm
     pkgs.gcc
+    pkgs.pkgconfig
 
     (pkgs.python3.withPackages (p: with p; [
       ipython
