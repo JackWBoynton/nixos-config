@@ -84,3 +84,5 @@ morespace() { sudo mount -o remount,size="$1" /run/user/1000; }
 # aws
 alias aws-dev="export AWS_ENV=dev && export AWS_PROFILE=dev-data && export AWS_DEFAULT_REGION=us-east-1"
 alias aws-prod="export AWS_ENV=prod && export AWS_PROFILE=prod-data && export AWS_DEFAULT_REGION=us-east-1"
+
+export LD_LIBRARY_PATH="${TOOLCHAIN_PATH}:${LD_LIBRARY_PATH}"

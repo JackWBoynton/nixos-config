@@ -1,4 +1,11 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+
+let
+
+  STM32Toolchain = pkgs.callPackage ./stm32-toolchain.nix {
+    inherit (pkgs) stdenv fetchurl ncurses5 libiconv;
+  };
+in {
   imports = [
     ../modules/vmware-guest.nix
     ./vm-shared.nix
@@ -21,17 +28,22 @@
   # This works through our custom module imported above
   virtualisation.vmware.guest.enable = true;
 
-  # Share our host filesystem
-  fileSystems."/host" = {
-    fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
-    device = ".host:/";
-    options = [
-      "umask=22"
-      "uid=1000"
-      "gid=1000"
-      "allow_other"
-      "auto_unmount"
-      "defaults"
-    ];
+  # setup STM32 toolchain
+  environment.systemPackages = [
+    # vscode
+    pkgs.krb5
+    pkgs.cmake
+    pkgs.ncurses5
+    pkgs.libftdi
+    pkgs.libusb1
+    pkgs.ninja
+    pkgs.gdb
+    pkgs.libiconv
+    STM32Toolchain
+  ];
+
+  environment.variables = {
+    TOOLCHAIN_PATH = "${STM32Toolchain}/.toolchain/STM32/bin/";
   };
+
 }

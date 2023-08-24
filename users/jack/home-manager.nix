@@ -37,6 +37,8 @@ in {
     pkgs.watch
     pkgs.can-utils
 
+
+
     pkgs.gopls
     pkgs.zigpkgs.master
 
@@ -61,6 +63,19 @@ in {
     pkgs.rofi
     pkgs.zathura
   ]);
+
+  programs.vscode.package = (pkgs.vscode.override {
+  isInsiders = true;
+}).overrideAttrs (oldAttrs: rec {
+  src = (builtins.fetchTarball {
+    url = "https://update.code.visualstudio.com/latest/linux-arm64/insider";
+    sha256 = "1c4s096pj220s6bddyzppgdp88n6mslr8si0q44abhfx4x4zms6f";
+  });
+  version = "latest";
+  buildInputs = oldAttrs.buildInputs or [] ++ [ pkgs.krb5 ];
+});
+
+programs.vscode.enable = true;
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles
@@ -234,6 +249,7 @@ in {
       ];
     };
   };
+
 
   programs.kitty = {
     enable = true;
