@@ -11,11 +11,11 @@ darwin.lib.darwinSystem rec {
     { nixpkgs.overlays = overlays; }
 
     ../machines/${name}.nix
-    ../users/${user}/darwin.nix
+    ../home/${user}/darwin.nix
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.${user} = import ../users/${user}/home-manager.nix;
+      home-manager.users.${user} = import ../home/${user}/home-manager.nix;
     }
 
     # We expose some extra arguments so that our modules can parameterize

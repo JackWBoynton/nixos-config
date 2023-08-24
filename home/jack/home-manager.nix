@@ -118,7 +118,6 @@ programs.vscode.enable = true;
   programs.bash = {
     enable = true;
     shellOptions = [];
-    historyControl = [ "ignoredups" "ignorespace" ];
     initExtra = builtins.readFile ./bashrc;
 
     shellAliases = {
@@ -234,7 +233,7 @@ programs.vscode.enable = true;
   };
 
   programs.alacritty = {
-    enable = true;
+    enable = false;
 
     settings = {
       env.TERM = "xterm-256color";

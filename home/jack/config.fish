@@ -134,3 +134,8 @@ end
 # `fnix -p go` to get an environment with Go but use the fish shell along
 # with it.
 alias fnix "nix-shell --run fish"
+# aws
+alias aws-dev="export AWS_ENV=dev && export AWS_PROFILE=dev-data && export AWS_DEFAULT_REGION=us-east-1"
+alias aws-prod="export AWS_ENV=prod && export AWS_PROFILE=prod-data && export AWS_DEFAULT_REGION=us-east-1"
+
+alias openocd="LD_LIBRARY_PATH=$TOOLCHAIN_PATH $TOOLCHAIN_PATH/openocd"
